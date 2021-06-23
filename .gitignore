@@ -1,4 +1,7 @@
 package-lock.json
+*.png
+schema.json
+
 collectionRemover.js
 # Logs
 logs
