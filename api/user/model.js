@@ -1,5 +1,5 @@
 const mongoose = require( 'mongoose' );
-const { defaultAdminData } = require('../../meta').user;
+// const { defaultAdminData } = require('../../meta').user;
 
 const { MAX_OTP_RESEND_COUNT } = process.env;
 
@@ -34,21 +34,21 @@ const UserModel = mongoose.model( 'users', userSchema ) ;
 module.exports = UserModel;
 
 
-async function createAdminIfUserCollectionIsEmpty() {
-    try {
-        console.log( "Check :: Existence of users")
-        if ( await UserModel.estimatedDocumentCount() == 0 ) {
+// async function createAdminIfUserCollectionIsEmpty() {
+//     try {
+//         console.log( "Check :: Existence of users")
+//         if ( await UserModel.estimatedDocumentCount() == 0 ) {
             
-            if ( !defaultAdminData.email || !defaultAdminData.pass )
-            return console.log( "Check :: Could not Create Admin, defaultAdmin Email not provided" );
-            const defaultAdminDoc = new UserModel();
-            Object.assign( defaultAdminDoc, defaultAdminData );
-            await defaultAdminDoc.save();
-            console.log( "Check :: User Collection is empty: Admin Created!" );
-        }
-        console.log( "Check :: Users Exist")
-    } catch ( err ) {
-        console.log( "Check :: Couldn't Create Admin", err )
-    }
-}
-createAdminIfUserCollectionIsEmpty();
+//             if ( !defaultAdminData.email || !defaultAdminData.pass )
+//             return console.log( "Check :: Could not Create Admin, defaultAdmin Email not provided" );
+//             const defaultAdminDoc = new UserModel();
+//             Object.assign( defaultAdminDoc, defaultAdminData );
+//             await defaultAdminDoc.save();
+//             console.log( "Check :: User Collection is empty: Admin Created!" );
+//         }
+//         console.log( "Check :: Users Exist")
+//     } catch ( err ) {
+//         console.log( "Check :: Couldn't Create Admin", err )
+//     }
+// }
+// createAdminIfUserCollectionIsEmpty();
