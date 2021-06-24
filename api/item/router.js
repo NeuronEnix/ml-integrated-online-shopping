@@ -7,4 +7,6 @@ const { softAuthorize } = require( "../../handlers/tokenHandler" );
 router.post( "/add-detail", softAuthorize, require( "./controller/addDetail" ) );
 router.post( "/add-image",  softAuthorize, multiFile( [ { name: "img", maxCount: 10 } ] ) , require( "./controller/addImage" ) );
 
+router.get( "/detail", softAuthorize, require( "./controller/getDetail" )  );
+
 module.exports = router;
