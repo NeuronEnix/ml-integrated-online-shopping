@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema ({
 
 });
 
-userSchema.index( { email:1, shopID:1 }, { unique: true } );
+userSchema.index( { shopID:1, email:1 }, { unique: true } );
 
 const UserModel = mongoose.model( 'users', userSchema ) ;
 module.exports = UserModel;
