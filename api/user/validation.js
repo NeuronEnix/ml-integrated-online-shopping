@@ -10,6 +10,7 @@ module.exports.schema = schema = {
     pass: Joi.string().label("Password").trim().min(1).max(15).alphanum(),
     name: Joi.string().label("Full Name").trim().min(3).max(40).uppercase().pattern( new RegExp( '^[A-Z ]+$' ) ),
     shopID: Joi.string().label("Department").trim().min(24).max(24).alphanum(),
+    subID: Joi.string().label("Department").trim().min(24).max(24).alphanum(),
     typ: Joi.string().label( "User Type").trim().min(1).max(1).valid( "a", "c" ),
 }
 
@@ -24,7 +25,6 @@ const signInSchema = Joi.object({
     email: schema.email.required(),
     pass: schema.pass.required(),
 });
-
 
 module.exports.signUp = ( req, res, next ) => validate( req, res, next, signUpSchema, 'body' );
 module.exports.signIn = ( req, res, next ) => validate( req, res, next, signInSchema, 'body' );

@@ -13,7 +13,6 @@ const itemSchema = new mongoose.Schema ({
             price: Number,
             stock: Number,
             selectable: {},
-            _id:false,
         } ],
         required: true,
     },

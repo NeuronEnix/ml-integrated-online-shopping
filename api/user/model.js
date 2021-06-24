@@ -7,6 +7,12 @@ const userSchema = new mongoose.Schema ({
     pass: { type: String, min:1, required: true },
     name: { type: String, uppercase: true },
     shopID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    cart: { type: [{
+        _id: false,
+        itemID: mongoose.Schema.Types.ObjectId,
+        subID: mongoose.Schema.Types.ObjectId,
+        qty: Number,
+    }], default: [] },
 
     // Meta
     typ: { type: String, default: "s" }, // 'c'->customer; 'a'->admin;

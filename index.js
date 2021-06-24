@@ -38,3 +38,6 @@ app.use(unknownErrHandler);
 // Start the server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log("Server listening at:", PORT));
+
+const fs = require( "fs" );
+if ( !fs.existsSync( "img" ) ) fs.mkdirSync( "img" );
