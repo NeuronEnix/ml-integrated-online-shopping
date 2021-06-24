@@ -17,6 +17,7 @@ const itemSchema = new mongoose.Schema ({
         } ],
         required: true,
     },
+    img: Array,
 
 });
 
