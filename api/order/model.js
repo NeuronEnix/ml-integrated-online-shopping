@@ -8,6 +8,7 @@ const orderSchema = new mongoose.Schema ({
     itemID: { type: mongoose.Schema.Types.ObjectId, required: true },
     subID: { type: mongoose.Schema.Types.ObjectId, required: true },
     qty: { type: Number, required: true },
+    tracking: { type: Number, default: 0 },
     
     // Meta
     creAt: { type: Date, default: Date.now },

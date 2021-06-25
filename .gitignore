@@ -1,5 +1,6 @@
 package-lock.json
 *.png
+public
 schema.json
 
 collectionRemover.js

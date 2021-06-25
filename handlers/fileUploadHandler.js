@@ -1,5 +1,5 @@
 var multer  = require('multer')
-var upload = multer({ dest: 'img/' })
+var upload = multer({ dest: 'public/item/' })
 
-module.exports.singleFile = ( fieldname ) => { return upload.single( fieldname ); }
+module.exports.singleFile = ( dest, fieldname ) => multer({ dest }).single( fieldname );
 module.exports.multiFile = ( fields ) => { return upload.fields( fields ); }
