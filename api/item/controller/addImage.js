@@ -30,7 +30,7 @@ module.exports = async (req, res, next ) => {
             if ( err.errno != -4058 ) 
                 throw err;
         }
-        
+        console.log( req.files );
         const imgFileNameList = req.files.img.map( eachImg => eachImg.filename );
         itemDoc.img = imgFileNameList;
 
