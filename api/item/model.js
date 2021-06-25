@@ -3,20 +3,16 @@ const mongoose = require( 'mongoose' );
 const itemSchema = new mongoose.Schema ({
 
     // Data
+    img: Array,
     shopID:  { type: mongoose.Schema.Types.ObjectId, required: true },
     name: { type: String, uppercase: true, required: true },
     rateSum: { type: Number, default: 0 },
     rateCount: { type: Number, default: 0 },
     description: { type: String, required: true },
     subDetail: {
-        type : [ {
-            price: Number,
-            stock: Number,
-            selectable: {},
-        } ],
+        type : [ { price: Number, stock: Number, selectable: {}, } ],
         required: true,
     },
-    img: Array,
 
 });
 

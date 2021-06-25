@@ -1,14 +1,17 @@
 const mongoose = require( 'mongoose' );
 
+const ObjectID = mongoose.Schema.Types.ObjectId;
+
 const shopSchema = new mongoose.Schema ({
 
     // Data
     name: { type: String, uppercase: true },
     address: { type: String, uppercase: true },
     pinCode: { type: String, uppercase: true },
+    onSale: { type: [ { _id: false, itemID: ObjectID, offer: Number } ] , default: [] },
     
     // Meta
-    userID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    userID: { type: ObjectID, required: true },
 
 });
 

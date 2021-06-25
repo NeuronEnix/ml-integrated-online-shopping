@@ -13,8 +13,8 @@ module.exports = async (req, res, next ) => {
         
         try {
         
-            if ( itemDoc.img ) // Delete previous images
-                itemDoc.img.forEach( img => fs.unlinkSync( path.join( __dirname, "../../../", "img", img ) ) );
+            if ( deletedDoc.img ) // Delete previous images
+                deletedDoc.img.forEach( img => fs.unlinkSync( path.join( __dirname, "../../../", "img", img ) ) );
 
         } catch ( err ) {
             // no such file or directory == -4058
