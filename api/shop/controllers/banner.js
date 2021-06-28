@@ -9,7 +9,7 @@ module.exports.addBanner = async ( req, res, next ) => {
 
         if ( !shopDoc )
             return resErr( res, resErrType.resNotFound, { infoToClient: "Shop Not Found" } );
-        shopDoc.banner.push( req.file.filename );
+        shopDoc.banner = req.file.filename ;
         await shopDoc.save();
         return resOk( res );
         
