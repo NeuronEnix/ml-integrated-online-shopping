@@ -20,6 +20,8 @@ const { reqLogger } = require("./handlers/requestHandler");
 app.use(express.json(), reqLogger);
 
 // Api routers
+app.use(express.static(__dirname + '/public'));
+
 app.use(require("./api"));
 app.use(require("./handlers/tokenHandler/router"));
 const { resOk, resErr, resErrType, unknownErrHandler } = require("./handlers/responseHandler");
@@ -43,3 +45,4 @@ const fs = require( "fs" );
 if ( !fs.existsSync( "public" ) ) fs.mkdirSync( "public" );
 if ( !fs.existsSync( "public/item" ) ) fs.mkdirSync( "public/item" );
 if ( !fs.existsSync( "public/banner" ) ) fs.mkdirSync( "public/banner" );
+
