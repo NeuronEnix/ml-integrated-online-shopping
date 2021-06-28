@@ -4,6 +4,7 @@ const itemSchema = new mongoose.Schema ({
 
     // Data
     img: Array,
+    category: { type: String, uppercase: true, required: true },
     shopID:  { type: mongoose.Schema.Types.ObjectId, required: true },
     name: { type: String, uppercase: true, required: true },
     rateSum: { type: Number, default: 0 },

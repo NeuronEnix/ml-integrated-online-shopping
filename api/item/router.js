@@ -8,7 +8,9 @@ router.post( "/add-image",  softAuthorize, multiFile( [ { name: "img", maxCount:
 
 router.post( "/delete", softAuthorize, require( "./controller/deleteItem") );
 
+
 router.get( "/detail", softAuthorize, require( "./controller/getDetail" )  );
-router.get( "/autoComplete", softAuthorize, require( "./controller/autoComplete") );
+router.get( "/item-autoComplete", softAuthorize, require( "./controller/itemAutoComplete") );
+router.get( "/category-autoComplete", softAuthorize, require( "./controller/categoryAutoComplete") );
 
 module.exports = router;
