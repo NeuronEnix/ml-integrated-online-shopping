@@ -22,7 +22,7 @@ module.exports = async (req, res, next ) => {
             { $project: { categoryList:1, _id:0 } },
         ]);
     
-        return resOk( res, categoryList[ 0 ].categoryList  ) ;
+        return resOk( res, categoryList[ 0 ]?.categoryList || []  ) ;
 
     } catch( err ) {
 
