@@ -20,8 +20,8 @@ const { reqLogger } = require("./handlers/requestHandler");
 app.use(express.json(), reqLogger);
 
 // Api routers
-app.use(express.static(__dirname + '/public'));
-
+app.use( "/public", express.static('public') );
+// app.get( "/test", ( req, res, next ) => { res.status(200).send( "hello" ) } )
 app.use(require("./api"));
 app.use(require("./handlers/tokenHandler/router"));
 const { resOk, resErr, resErrType, unknownErrHandler } = require("./handlers/responseHandler");
