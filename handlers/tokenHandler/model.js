@@ -3,6 +3,7 @@ const mongoose =  require( "mongoose" );
 const tokenSchema = new mongoose.Schema({
     iat: { type: Date, default: Date.now }, //issued at
     userID: { type: mongoose.SchemaTypes.ObjectId, required:true, index:true },
+    shopID: { type: mongoose.SchemaTypes.ObjectId, required:true, index:true },
     creAt: { type: Date, default: Date.now },
 }) ;
 

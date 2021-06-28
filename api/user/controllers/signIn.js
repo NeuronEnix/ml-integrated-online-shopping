@@ -14,7 +14,7 @@ module.exports = async ( req, res, next ) => {
             return resErr( res, resErrType.invalidCred, { infoToClient: "Email or Password Incorrect" } )
         }
         
-        const rTok = await refTok.signAndSave( { userID: userDoc._id } );
+        const rTok = await refTok.signAndSave( { userID: userDoc._id, shopID: userDoc.shopID, } );
         refTok.addToCookie( res, rTok );
         const accTokPayload = { userID: userDoc._id, typ: userDoc.typ, shopID: userDoc.shopID, tokID: refTok.decode( rTok ).tokID }
 

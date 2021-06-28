@@ -8,16 +8,16 @@ const { tokenErrHandler } = require('./config')
 
 router.get( "/tok/refresh", cookieParser, async ( req, res, next ) => {
     try {
-        const { tokID, userID, iat } = refTok.verify( req.cookies.refTok );
+        const { tokID, userID, shopID, iat } = refTok.verify( req.cookies.refTok );
         const updated_iat = new Date().getTime();
         const updatedInfo = await TokenModel.updateOne( { _id:tokID, userID, iat }, { $set: { iat: updated_iat } } );
 
         // If no match ( probably because of old refToken being active )
         if ( updatedInfo.n == 0 ) return resErr( res, resErrType.invalidToken, { infoToClient: "Sing In Again!" } )
 
-        const rTok = refTok.sign( { tokID, userID, iat:updated_iat } );
+        const rTok = refTok.sign( { tokID, userID, shopID, iat:updated_iat } );
         refTok.addToCookie( res, rTok );
-        return resOk( res, { accTok : accTok.sign( { tokID, userID } )} );
+        return resOk( res, { accTok : accTok.sign( { tokID, userID, shopID } )} );
 
     } catch ( err ) {
         return tokenErrHandler( err, req, res, next );
