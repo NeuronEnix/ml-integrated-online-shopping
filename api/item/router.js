@@ -10,7 +10,8 @@ router.post( "/delete", softAuthorize, require( "./controller/deleteItem") );
 
 
 router.get( "/detail", softAuthorize, require( "./controller/getDetail" )  );
-router.get( "/item-autoComplete", softAuthorize, require( "./controller/itemAutoComplete") );
-router.get( "/category-autoComplete", softAuthorize, require( "./controller/categoryAutoComplete") );
+router.get( "/search", softAuthorize, require( "./controller/itemSearch" ) );
+router.get( "/item-autoComplete", softAuthorize, require( "./controller/itemAutoComplete" ) );
+router.get( "/category-autoComplete", softAuthorize, require( "./controller/categoryAutoComplete" ) );
 
 module.exports = router;
