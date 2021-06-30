@@ -33,7 +33,7 @@ module.exports.view = async ( req, res, next ) => {
                 itemID: cart.itemID,
                 subID: cart.subID,
                 qty: cart.qty,
-                img: (await ItemModel.findById( cart.itemID )).img ,
+                itemObj: (await ItemModel.findById( cart.itemID, { _id:0, __v:0} )) ,
             }) 
         }
         return resOk( res, cartList );
