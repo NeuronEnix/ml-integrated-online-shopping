@@ -11,11 +11,11 @@ const itemSchema = new mongoose.Schema ({
     rateCount: { type: Number, default: 0 },
     description: { type: String, required: true },
     subDetail: {
-        type : [ { price: Number, stock: Number, selectable: {}, } ],
+        type : [ { price: Number, stock: Number, selectable: { default: {} }, } ],
         required: true,
     },
 
-});
+},{ minimize: false});
 
 itemSchema.index( { shopID: 1, name: 1 }, { unique: true } );
 
