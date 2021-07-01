@@ -1,7 +1,6 @@
 const UserModel = require('../model');
 const ItemModel = require( "../../item/model" );
 const ShopModel = require( "../../shop/model" );
-const mongoose = require( "mongoose" );
 
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');
 
@@ -36,7 +35,7 @@ module.exports.view = async ( req, res, next ) => {
             cartList.push({
                 itemID: cart.itemID,
                 subID: cart.subID,
-                offer: onSale.find( eachOffer => String( eachOffer.itemID ) == String( cart.itemID )  ),
+                offer: onSale.find( eachOffer => String( eachOffer.itemID ) == String( cart.itemID )  )?.offer || 0,
                 qty: cart.qty,
                 itemObj: (await ItemModel.findById( cart.itemID, { _id:0, __v:0} )) ,
             }) 
