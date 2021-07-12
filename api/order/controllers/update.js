@@ -1,10 +1,10 @@
 const OrderModel = require('../model');
-
+const RateModel = require( "../rate.model" );
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');
 
 module.exports.rating = async ( req, res, next ) => {
     try {
-        const { rate, orderID } = req.body;
+        const { rate, orderID, } = req.body;
 
         const orderDoc = await OrderModel.findById( orderID );
         
@@ -13,6 +13,17 @@ module.exports.rating = async ( req, res, next ) => {
 
         orderDoc.userRating = rate;
         await orderDoc.save();
+
+        const existingRateDoc = await RateModel.findOne( { orderID } );
+        if ( existingRateDoc ) {
+            existingRateDoc.rate = rate;
+            existingRateDoc.save();
+        } else {
+            const rateDoc = new RateModel();
+            const { shopID, userID, itemID, subID } = orderDoc;
+            Object.assign( rateDoc, { shopID, userID, itemID, subID, rate, orderID } );
+            await rateDoc.save();
+        }
 
         return resOk( res );
 

@@ -1,5 +1,4 @@
 const ShopModel = require('../model');
-const mongoose = require( "mongoose" );
 const ItemModel = require( "../../item/model" );
 
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');

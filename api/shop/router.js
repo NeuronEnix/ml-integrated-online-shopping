@@ -13,4 +13,10 @@ router.get(  '/list-offer',  softAuthorize, require( "./controllers/offer.js").l
 router.post( "/banner" , softAuthorize, singleFile( "public/banner/", "img" ) , require( "./controllers/banner" ).addBanner );
 router.get(  "/banner" , softAuthorize, require( "./controllers/banner" ).listBanner );
 
+
+// Home Page 
+router.get(  '/popular',  softAuthorize, require( "./controllers/popular")  );
+// router.get(  '/trending',  softAuthorize, require( "./controllers/offer.js").listOffer  );
+// router.get(  '/recommended', softAuthorize, require( "./controllers/offer.js").listOffer  );
+
 module.exports = router;

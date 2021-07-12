@@ -45,6 +45,7 @@ module.exports = async ( req, res, next ) => {
         }
 
         return resOk( res, stripeResult );
+        // return resOk( res );
 
     } catch ( err ) {
         return next( { _AT: __filename, err } );

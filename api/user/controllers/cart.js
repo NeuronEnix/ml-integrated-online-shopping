@@ -9,7 +9,6 @@ module.exports.update = async ( req, res, next ) => {
         const { userID, shopID } = req.user; 
 
         const userDoc = await UserModel.findOne( { _id: userID, shopID } );
-        console.log( userDoc );
         if ( !userDoc ) return resErr( res, resErrType.unAuthorized, { infoToClient: "Invalid User" } );
 
         userDoc.cart = req.body;
