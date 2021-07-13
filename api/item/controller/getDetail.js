@@ -22,6 +22,7 @@ module.exports = async (req, res, next ) => {
         return resOk( res, {
             ...itemDoc,
             rate: await RateModel.getAvgRating( itemID ),
+            rateCount: await RateModel.getRateCount( itemID ),
             offer: onSale.find( eachOffer => String( eachOffer.itemID ) == String( itemID )  )?.offer || 0,
         } );
 

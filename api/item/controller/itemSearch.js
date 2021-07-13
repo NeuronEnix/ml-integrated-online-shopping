@@ -29,7 +29,7 @@ module.exports = async (req, res, next ) => {
             { $sort:{ name:1 } },
             { $project: { 
                 name:1, itemID: "$_id", img:1,
-                rating: { $divide: [ "$rateSum", { $cond: [ { $eq: [ "$rateCount", 0 ] }, 1, "$rateCount" ] } ] },
+                rate: { $divide: [ "$rateSum", { $cond: [ { $eq: [ "$rateCount", 0 ] }, 1, "$rateCount" ] } ] },
                 _id:0,
             } },
         ]);
@@ -38,8 +38,14 @@ module.exports = async (req, res, next ) => {
             if ( !itemList.find( item => String(eachItem.itemID) == String( item.itemID ) ) )
                 itemList.push( eachItem );
 
-        for ( item of itemList )
+
+        const onSale = (await ShopModel.findById( shopID ).lean()).onSale;
+
+        for ( item of itemList ) {
             item.price = (await ItemModel.findById( item.itemID )).subDetail[0].price;
+            item.itemObj = await ItemModel.findById( item.itemID , { rateSum:0, rateCount:0, __v:0 } );
+            item.offer = onSale.find( eachOffer => String( eachOffer.itemID ) == String( itemID )  )?.offer || 0;
+        }
         
         return resOk( res, { itemList, onSale: (await ShopModel.findById( shopID )).onSale } ) ;
 
