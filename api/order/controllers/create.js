@@ -28,7 +28,7 @@ module.exports = async ( req, res, next ) => {
         }
 
         // Payment
-        const stripeToken = req.body;
+        const {stripeToken} = req.body;
         const userMetadata = { userID: req.user.userID };
         const stripeResult = await stripeCheckout( stripeToken, totPrice, userDoc.email, "1234567890", userDoc.name, userMetadata );
 
