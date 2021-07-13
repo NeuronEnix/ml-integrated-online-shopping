@@ -11,18 +11,33 @@ module.exports = async (req, res, next ) => {
         const { itemName } = req.query;
         const { shopID } = req.user;
         const regExItemName = ".*" + itemName.split("").join( ".*" ) + ".*" ; 
+
         console.log( regExItemName );
+
         const itemList = await ItemModel.aggregate([
             { $match : { shopID: mongoose.Types.ObjectId( shopID ), name : new RegExp( regExItemName ),  } },
             { $sort:{ name:1 } },
-            { $limit: 10 } ,
             { $project: { 
                 name:1, itemID: "$_id", img:1,
                 rating: { $divide: [ "$rateSum", { $cond: [ { $eq: [ "$rateCount", 0 ] }, 1, "$rateCount" ] } ] },
                 _id:0,
             } },
-
         ]);
+
+        const itemListByCategory = await ItemModel.aggregate([
+            { $match : { shopID: mongoose.Types.ObjectId( shopID ), category : new RegExp( regExItemName ),  } },
+            { $sort:{ name:1 } },
+            { $project: { 
+                name:1, itemID: "$_id", img:1,
+                rating: { $divide: [ "$rateSum", { $cond: [ { $eq: [ "$rateCount", 0 ] }, 1, "$rateCount" ] } ] },
+                _id:0,
+            } },
+        ]);
+
+        for ( eachItem of itemListByCategory )
+            if ( !itemList.find( item => String(eachItem.itemID) == String( item.itemID ) ) )
+                itemList.push( eachItem );
+
         for ( item of itemList )
             item.price = (await ItemModel.findById( item.itemID )).subDetail[0].price;
         
