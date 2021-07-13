@@ -13,5 +13,6 @@ router.get( "/detail", softAuthorize, require( "./controller/getDetail" )  );
 router.get( "/search", softAuthorize, require( "./controller/itemSearch" ) );
 router.get( "/item-autoComplete", softAuthorize, require( "./controller/itemAutoComplete" ) );
 router.get( "/category-autoComplete", softAuthorize, require( "./controller/categoryAutoComplete" ) );
+router.get( "/category-list", softAuthorize, require( "./controller/categoryList" ) );
 
 module.exports = router;
