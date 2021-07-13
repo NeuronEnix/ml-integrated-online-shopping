@@ -1,5 +1,8 @@
+const mongoose = require( "mongoose" )
+
 const ShopModel = require('../model');
 const ItemModel = require( "../../item/model" );
+const RateModel = require( "../../order/rate.model" );
 
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');
 
@@ -29,12 +32,13 @@ module.exports.listOffer = async ( req, res, next ) => {
             return resErr( res, resErrType.resNotFound, { infoToClient: "Shop Not Found" } );
         const onSaleItems = [];
 
-        for ( item of shopDoc.onSale ){
+        for ( item of shopDoc.onSale ) {
             const curItem = await ItemModel.findOne( { _id: item.itemID } );
             onSaleItems.push({
-                itemID: item.itemID, offer: item.offer,
-                price: curItem.subDetail[0].price,
-                name: curItem.name,
+                itemID: item.itemID,
+                offer: item.offer,
+                itemObj: curItem,
+                rate: await RateModel.getAvgRating( item.itemID ),
             })            
         }
         
