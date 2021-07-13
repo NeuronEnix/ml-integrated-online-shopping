@@ -1,6 +1,7 @@
 const ItemModel = require( "../model" );
 const ShopModel = require( "../../shop/model" );
 const fs = require( "fs" );
+const path = require( "path" );
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');
 
 
@@ -22,8 +23,8 @@ module.exports = async (req, res, next ) => {
         try {
         
             if ( deletedDoc.img ) // Delete previous images
-                deletedDoc.img.forEach( img => fs.unlinkSync( path.join( __dirname, "../../../", "img", img ) ) );
-
+                deletedDoc.img.forEach( img => fs.unlinkSync( path.join( __dirname, "..", "..", "..", "public", "item", img ) ) );
+            console.log( __dirname )
         } catch ( err ) {
             // no such file or directory == -4058
             // if that is not the error then re throw error
