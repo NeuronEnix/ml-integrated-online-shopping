@@ -31,5 +31,20 @@ rateSchema.statics.getAvgRating = async ( itemID ) => {
     return 0;
 }
 
+
+rateSchema.statics.getRateCount = async ( itemID ) => {
+    const rateDoc = await RateModel.aggregate([
+        { $match : { itemID: mongoose.Types.ObjectId( itemID ) } },
+        { $group: {
+            _id: null,
+            rateCount: { $sum: 1 },
+        }},
+        { $sort: { rateCount: 1 } },
+        { $project: { rateCount:1, _id: 0 } },
+    ])
+    if ( rateDoc.length == 1) return rateDoc[0].rateCount;
+    return 0;
+}
+
 const RateModel = mongoose.model( 'rates', rateSchema ) ;
 module.exports = RateModel;
