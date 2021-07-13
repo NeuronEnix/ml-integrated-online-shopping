@@ -1,15 +1,23 @@
 const ItemModel = require( "../model" );
+const ShopModel = require( "../../shop/model" );
+const fs = require( "fs" );
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');
 
 
 module.exports = async (req, res, next ) => {
 
     try {
-        
-        const deletedDoc = await ItemModel.findOneAndDelete( { _id: req.body.itemID, shopID: req.user.shopID } );
+        const { itemID } = req.body;
+        const { shopID } = req.user;
+
+        const deletedDoc = await ItemModel.findOneAndDelete( { _id: itemID, shopID } );
 
         if ( !deletedDoc )
             return resErr( res, resErrType.resNotFound, { infoToClient: "The Item may have been already deleted" } );
+        
+        const shopDoc = await ShopModel.findById( shopID );
+        shopDoc.onSale = shopDoc.onSale.filter( item => String(item.itemID) != String(itemID) )
+        await shopDoc.save();
         
         try {
         
@@ -23,6 +31,8 @@ module.exports = async (req, res, next ) => {
                 throw err;
         }
         
+
+
         return resOk( res );
         
     } catch( err ) {
