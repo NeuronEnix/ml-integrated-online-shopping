@@ -19,7 +19,7 @@ rateSchema.index( { shopID: 1, userID: 1, itemID: 1, orderID:1 }, { unique: true
 
 rateSchema.statics.getAvgRating = async ( itemID ) => {
     const rateDoc = await RateModel.aggregate([
-        { $match : { itemID: mongoose.Types.ObjectId( item.itemID ) } },
+        { $match : { itemID: mongoose.Types.ObjectId( itemID ) } },
         { $group: {
             _id: null,
             avgRate: { $avg: "$rate" },
