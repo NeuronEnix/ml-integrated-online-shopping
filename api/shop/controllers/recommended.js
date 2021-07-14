@@ -54,7 +54,7 @@ module.exports = async ( req, res, next ) => {
             console.log( recommendedItemIndexList );
 
             if ( recommendedItemIndexList.length == 0 || recommendedItemIndexList[0] == -1 )
-                return resOk( res );
+                return resOk( res, [] );
 
             const onSale = (await ShopModel.findById( shopID ).lean()).onSale;
 
@@ -80,7 +80,7 @@ module.exports = async ( req, res, next ) => {
 
         }
         
-        return resOk( res );
+        return resOk( res, [] );
     } catch ( err ) {
         return next( { _AT: __filename, err } );
     }
