@@ -6,14 +6,6 @@ const ItemModel = require( "../../item/model" );
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');
 
 const recommend = require('collaborative-filter');
-// const { object } = require("joi");
-// const ratings = [
-//     [1, 1, 1, 0],
-//     [1, 0, 1, 1],
-//     [1, 1, 0, 0],
-//    ];
-// const result = 
-// console.log( result )
 module.exports = async ( req, res, next ) => {
     try {
     
