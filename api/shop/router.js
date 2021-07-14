@@ -17,6 +17,7 @@ router.get(  "/banner" , softAuthorize, require( "./controllers/banner" ).listBa
 
 // Home Page 
 router.get(  '/popular',  softAuthorize, require( "./controllers/popular") );
-router.get(  '/recommended',  softAuthorize, require( "./controllers/popular") );
+router.get(  '/new-arrival',  softAuthorize, require( "./controllers/popular") );
+router.get(  '/recommended',  softAuthorize, require( "./controllers/recommended") );
 
 module.exports = router;
