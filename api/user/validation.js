@@ -7,6 +7,7 @@ module.exports.schema = schema = {
         if ( val.endsWith( '@gmail.com' ) || val.endsWith( '@yahoo.com' ) ) return val;
         return helpers.error( "custom.emailDomain" );
     }),
+    phone: Joi.string().label( "Phone" ).trim().min(10).max(10).pattern( new RegExp( '^[0-9]+$')),
     pass: Joi.string().label("Password").trim().min(1).max(15).alphanum(),
     name: Joi.string().label("Full Name").trim().min(3).max(40).uppercase().pattern( new RegExp( '^[A-Z ]+$' ) ),
     shopID: Joi.string().label("Department").trim().min(24).max(24).alphanum(),
