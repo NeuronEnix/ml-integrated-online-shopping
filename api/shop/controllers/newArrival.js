@@ -12,8 +12,8 @@ module.exports = async ( req, res, next ) => {
 
         const itemDocList = await ItemModel.aggregate([
             { $match : { shopID: mongoose.Types.ObjectId( shopID ) } },
-            { $sort: { _id:1 } },
-            { $project: {  _id: 0 } },
+            { $sort: { _id: -1 } },
+            { $project: {  _id: 1 } },
         ])
 
         const onSale = (await ShopModel.findById( shopID ).lean()).onSale;
