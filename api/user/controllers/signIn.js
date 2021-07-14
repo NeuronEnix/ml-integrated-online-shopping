@@ -1,5 +1,6 @@
 const bcrypt = require( 'bcrypt' );
 const UserModel = require('../model');
+const mongoose = require( "mongoose" );
 const { accTok, refTok } = require('../../../handlers/tokenHandler');
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');
 
@@ -8,7 +9,11 @@ module.exports = async ( req, res, next ) => {
         console.log( req.params );
         const { email, pass } = req.body;
         
-        const userDoc = await UserModel.findOne( { email }, { pass:1, typ:1, shopID:1 } ).lean();
+        const filter = { email };
+        if ( req.params.id != "shop" )
+            filter.shopID = mongoose.Types.ObjectId( req.params.id );
+
+        const userDoc = await UserModel.findOne( filter, { pass:1, typ:1, shopID:1 } ).lean();
 
         if ( !userDoc || !bcrypt.compareSync( pass, userDoc.pass ) ) {
             return resErr( res, resErrType.invalidCred, { infoToClient: "Email or Password Incorrect" } )
