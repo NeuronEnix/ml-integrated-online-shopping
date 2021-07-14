@@ -5,7 +5,7 @@ const validate = require( './validation' );
 const { softAuthorize } = require( "../../handlers/tokenHandler" );
 const { singleFile } = require( "../../handlers/fileUploadHandler" );
 
-router.post( '/update', express.json(), validate.updateShop, softAuthorize, require( './controllers/updateShop' ) );
+router.post( '/details', express.json(), validate.updateShop, softAuthorize, require( './controllers/updateShop' ) );
 
 router.post( '/apply-offer', softAuthorize, require( "./controllers/offer.js").applyOffer );
 router.get(  '/list-offer',  softAuthorize, require( "./controllers/offer.js").listOffer  );
