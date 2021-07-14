@@ -28,15 +28,15 @@ module.exports = async ( req, res, next ) => {
         }
 
         // Payment
-        const {stripeToken} = req.body;
-        const userMetadata = { userID: req.user.userID };
-        const stripeResult = await stripeCheckout( stripeToken, totPrice, userDoc.email, "1234567890", userDoc.name, userMetadata );
+        // const {stripeToken} = req.body;
+        // const userMetadata = { userID: req.user.userID };
+        // const stripeResult = await stripeCheckout( stripeToken, totPrice, userDoc.email, "1234567890", userDoc.name, userMetadata );
 
-        if ( stripeResult.status !== "succeeded" ) 
-            return resErr( res, resErrType.stripeError, { 
-                infoToClient: "Payment Failed: " + stripeResult.msg,
-                infoToServer: stripeResult
-            })
+        // if ( stripeResult.status !== "succeeded" ) 
+        //     return resErr( res, resErrType.stripeError, { 
+        //         infoToClient: "Payment Failed: " + stripeResult.msg,
+        //         infoToServer: stripeResult
+        //     })
 
         for ( item of cart ) {
             const orderDoc = await OrderModel();
@@ -44,8 +44,8 @@ module.exports = async ( req, res, next ) => {
             await orderDoc.save();
         }
 
-        return resOk( res, stripeResult );
-        // return resOk( res );
+        // return resOk( res, stripeResult );
+        return resOk( res );
 
     } catch ( err ) {
         return next( { _AT: __filename, err } );
