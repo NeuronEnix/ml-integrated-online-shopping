@@ -22,7 +22,7 @@ module.exports.update = async ( req, res, next ) => {
 
 module.exports.view = async ( req, res, next ) => {
     try {
-        const { userID, shopID } = req.user; 
+        const { userID, shopID } = req.user;
 
         const userDoc = await UserModel.findOne( { _id: userID, shopID } );
 

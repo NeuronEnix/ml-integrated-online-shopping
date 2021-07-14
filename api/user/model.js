@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema ({
     pass: { type: String, min:1, required: true },
     name: { type: String, uppercase: true },
     shopID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    phone: { type: String, },
+
     cart: { type: [{
         _id: false,
         itemID: mongoose.Schema.Types.ObjectId,

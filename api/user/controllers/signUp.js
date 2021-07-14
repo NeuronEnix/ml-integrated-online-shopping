@@ -20,7 +20,7 @@ module.exports = async ( req, res, next ) => {
                 return resErr( res, resErrType.duplicateErr, { infoToClient: 'Shop Is Already Registered with this email' } );
 
             shopDoc = new ShopModel();
-            shopDoc.userID = userDoc._id;   
+            shopDoc.userID = userDoc._id;
             await shopDoc.save();
 
             userDoc.typ = "a";
