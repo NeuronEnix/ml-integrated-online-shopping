@@ -11,7 +11,7 @@ const itemSchema = new mongoose.Schema ({
     rateCount: { type: Number, default: 0 },
     description: { type: String, required: true },
     subDetail: {
-        type : [ { price: Number, stock: Number, selectable: { default: {} }, } ],
+        type : [ { price: Number, stock: Number, selectable: { type:{}, default: {} }, } ],
         required: true,
     },
 
