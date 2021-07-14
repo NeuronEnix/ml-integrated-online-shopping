@@ -50,6 +50,9 @@ module.exports = async ( req, res, next ) => {
                 }
             }
             console.log( userItemSparse );
+            console.log( userIndObj )
+            console.log( userItemObj )
+
             const recommendedItemIndexList = recommend.cFilter( userItemSparse, userIndObj[ userID ] )
             console.log( recommendedItemIndexList );
 

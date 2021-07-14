@@ -9,7 +9,7 @@ module.exports = async ( req, res, next ) => {
     try {
         const { userID, shopID } = req.user; 
 
-        const orderDoc = await OrderModel.find( { userID, shopID }, { __v:0 } ).lean();
+        const orderDoc = await OrderModel.find( { userID, shopID }, { __v:0 } ).sort({_id:-1}).lean();
         
         if ( !orderDoc )
             return resErr( res, resErrType.resNotFound, { infoToClient: "Invalid Order" } );
