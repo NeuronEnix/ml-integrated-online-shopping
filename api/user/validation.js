@@ -19,6 +19,7 @@ module.exports.schema = schema = {
 const signUpSchema = Joi.object({
     email: schema.email.required(),
     pass: schema.pass.required(),
+    phone: schema.phone.required(),
     name: schema.name.required(),
 });
 
