@@ -8,6 +8,7 @@ const rateSchema = new mongoose.Schema ({
     userID: { type: mongoose.Schema.Types.ObjectId, required: true },
     itemID: { type: mongoose.Schema.Types.ObjectId, required: true },
     subID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    category: String,
     rate: { type: Number, default: 0 },
     
     // Meta

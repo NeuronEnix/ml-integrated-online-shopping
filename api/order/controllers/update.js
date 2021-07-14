@@ -1,5 +1,7 @@
 const OrderModel = require('../model');
 const RateModel = require( "../rate.model" );
+const ItemModel = require( "../../item/model" );
+
 const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler');
 
 module.exports.rating = async ( req, res, next ) => {
@@ -21,7 +23,8 @@ module.exports.rating = async ( req, res, next ) => {
         } else {
             const rateDoc = new RateModel();
             const { shopID, userID, itemID, subID } = orderDoc;
-            Object.assign( rateDoc, { shopID, userID, itemID, subID, rate, orderID } );
+            const { category } = await ItemModel.findById( itemID, { category:1, _id:0 } ).lean()
+            Object.assign( rateDoc, { shopID, userID, itemID, subID, rate, orderID, category } );
             await rateDoc.save();
         }
 
