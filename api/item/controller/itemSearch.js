@@ -12,26 +12,23 @@ module.exports = async (req, res, next) => {
 
         console.log(regExItemName);
 
-        const catDoc = await ItemModel.findOne({ category: itemName }).lean();
+        const catCount = await ItemModel.count({ category: itemName });
 
-        if ( !catDoc )
-            const itemList = await ItemModel.aggregate([
-                { $match: { shopID: mongoose.Types.ObjectId(shopID), name: new RegExp(regExItemName) } },
-                { $sort: { name: 1 } },
-                {
-                    $project: {
-                        name: 1,
-                        itemID: "$_id",
-                        img: 1,
-                        // rate: { $divide: ["$rateSum", { $cond: [{ $eq: ["$rateCount", 0] }, 1, "$rateCount"] }] },
-                        _id: 0,
-                    },
-                },
-            ]);
-
-        let catFilter = new RegExp(regExItemName) ;
-        if ( catDoc ) catFilter = itemName;
         
+        const itemList = await ItemModel.aggregate([
+            { $match: { shopID: mongoose.Types.ObjectId(shopID), name: new RegExp(regExItemName) } },
+            { $sort: { name: 1 } },
+            {
+                $project: {
+                    name: 1,
+                    itemID: "$_id",
+                    img: 1,
+                    category:1,
+                    _id: 0,
+                },
+            },
+        ]);
+
         const itemListByCategory = await ItemModel.aggregate([
             { $match: { shopID: mongoose.Types.ObjectId(shopID), category: new RegExp(regExItemName) } },
             { $sort: { name: 1 } },
@@ -40,7 +37,7 @@ module.exports = async (req, res, next) => {
                     name: 1,
                     itemID: "$_id",
                     img: 1,
-                    // rate: { $divide: ["$rateSum", { $cond: [{ $eq: ["$rateCount", 0] }, 1, "$rateCount"] }] },
+                    category:1,
                     _id: 0,
                 },
             },
@@ -48,13 +45,20 @@ module.exports = async (req, res, next) => {
 
         for (eachItem of itemListByCategory) if (!itemList.find((item) => String(eachItem.itemID) == String(item.itemID))) itemList.push(eachItem);
 
+        if ( catCount > 0 )
+            for ( let ind = 0; ind < itemList.length; ++ind )
+                if ( itemList[ ind ].category != itemName ) {
+                    itemList.splice( ind, 1 );
+                    ind--;
+                }
+
         const onSale = (await ShopModel.findById(shopID).lean()).onSale;
 
         for (item of itemList) {
             item.price = (await ItemModel.findById(item.itemID)).subDetail[0].price;
             item.itemObj = await ItemModel.findById(item.itemID, { rateSum: 0, rateCount: 0, __v: 0 });
             item.offer = onSale.find((eachOffer) => String(eachOffer.itemID) == String(item.itemID))?.offer || 0;
-            item.rate = RateModel.getAvgRating( item.itemID );
+            item.rate = await RateModel.getAvgRating( item.itemID );
         }
 
         return resOk(res, { itemList, onSale: (await ShopModel.findById(shopID)).onSale });
