@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 module.exports = async (req, res, next) => {
     try {
         const { itemName } = req.query;
+        const catDoc = await ItemModel.findOne({ category: itemName }).lean();
         const { shopID } = req.user;
         const regExItemName = ".*" + itemName.split("").join(".*") + ".*";
 
@@ -19,7 +20,7 @@ module.exports = async (req, res, next) => {
                     name: 1,
                     itemID: "$_id",
                     img: 1,
-                    rating: { $divide: ["$rateSum", { $cond: [{ $eq: ["$rateCount", 0] }, 1, "$rateCount"] }] },
+                    rate: { $divide: ["$rateSum", { $cond: [{ $eq: ["$rateCount", 0] }, 1, "$rateCount"] }] },
                     _id: 0,
                 },
             },
