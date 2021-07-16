@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema({
     itemID: { type: mongoose.Schema.Types.ObjectId, required: true },
     subID: { type: mongoose.Schema.Types.ObjectId, required: true },
     qty: { type: Number, required: true },
-    status: { type: Number, default: 4 },
+    status: { type: Number, default: 1 },
     price: { type: Number, default: 0 },
     offer: { type: Number, default: 0 },
     userRating: { type: Number, default: 0 },
