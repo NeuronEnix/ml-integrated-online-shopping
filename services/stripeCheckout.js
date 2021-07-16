@@ -1,6 +1,5 @@
 const { STRIPE_SECRET_KEY } = process.env;
 const stripe = require("stripe")( STRIPE_SECRET_KEY );
-const { default: Stripe } = require("stripe");
 const uuid = require("uuid");
 
 module.exports.stripeCheckout = async ( token, amount, userEmail, userPhone, userName, userMetadata ) => {
@@ -23,7 +22,7 @@ module.exports.stripeCheckout = async ( token, amount, userEmail, userPhone, use
                 currency: "inr",
                 customer: customer.id,
                 receipt_email: token.email,
-                description: "Envision: VIP Pass",
+                description: "Payment Gateway",
                 shipping: {
                     name: token.card.name || userName,
                     address: {
