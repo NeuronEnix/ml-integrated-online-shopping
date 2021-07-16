@@ -7,9 +7,13 @@ const { resOk, resErr, resErrType } = require('../../../handlers/responseHandler
 
 module.exports = async ( req, res, next ) => {
     try {
-        const { userID, shopID } = req.user; 
+        const { userID, shopID, typ } = req.user; 
+        const orderFilter = { shopID };
 
-        const orderDoc = await OrderModel.find( { userID, shopID }, { __v:0 } ).sort({_id:-1}).lean();
+        if ( typ != "a" )
+            orderFilter.userID = userID;
+
+        const orderDoc = await OrderModel.find( orderFilter, { __v:0 } ).sort({_id:-1}).lean();
         
         if ( !orderDoc )
             return resErr( res, resErrType.resNotFound, { infoToClient: "Invalid Order" } );
