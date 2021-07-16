@@ -23,7 +23,7 @@ module.exports = async ( req, res, next ) => {
             item.price = itemDoc.subDetail.find( sub => String( item.subID ) == String( sub._id ) ).price;
             item.offer = shopDoc.onSale.find( offerItem => String( offerItem.itemID ) == String( item.itemID ) )?.offer || 0;
 
-            totPrice += parseInt( item.price );
+            totPrice += ( parseInt( item.price ) * parseInt(item.qty) ) ;
 
         }
 
