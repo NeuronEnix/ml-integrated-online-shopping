@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
                     avgRate: { $avg: "$rate" },
                 },
             },
-            { $sort: { avgRate: 1 } },
+            { $sort: { avgRate: -1 } },
             { $project: { itemID: "$_id", avgRate: 1, _id: 0 } },
         ]);
 
