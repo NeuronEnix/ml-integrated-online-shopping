@@ -28,7 +28,7 @@ module.exports = async ( req, res, next ) => {
                 eachSubDetail.stock = parseInt( eachSubDetail.stock ) - parseInt( item.qty );
 
                 if ( eachSubDetail.stock < 0 )
-                    return resErr( res, resErrType.resNotFound, { infoToClient: "One of the product is out of stock" } );
+                    return resErr( res, resErrType.resNotFound, { infoToClient: `${item.name}: Is out of stock`} );
             }
 
             itemDocList.push( itemDoc );
