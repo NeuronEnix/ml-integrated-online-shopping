@@ -15,17 +15,27 @@ module.exports = async ( req, res, next ) => {
         const shopDoc = await ShopModel.findById( shopID ).lean();
 
         let totPrice = 0;
-
+        const itemDocList = []
         for ( item of cart ) {
             item.shopID = shopID;
             item.userID = userID;
-            itemDoc = await ItemModel.findById( item.itemID ).lean();
+            itemDoc = await ItemModel.findById( item.itemID );
             item.price = itemDoc.subDetail.find( sub => String( item.subID ) == String( sub._id ) ).price;
             item.offer = shopDoc.onSale.find( offerItem => String( offerItem.itemID ) == String( item.itemID ) )?.offer || 0;
 
             totPrice += ( parseInt( item.price ) * parseInt(item.qty) ) ;
+            for ( eachSubDetail of itemDoc.subDetail ) {
+                eachSubDetail.stock = parseInt( eachSubDetail.stock ) - parseInt( item.qty );
 
+                if ( eachSubDetail.stock < 0 )
+                    return resErr( res, resErrType.resNotFound, { infoToClient: "One of the product is out of stock" } );
+            }
+
+            itemDocList.push( itemDoc );
         }
+
+        for ( eachItemDoc of itemDocList )
+            await eachItemDoc.save();
 
         // Payment
         const {stripeToken} = req.body;
